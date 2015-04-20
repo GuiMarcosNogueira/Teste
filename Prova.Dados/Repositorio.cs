@@ -186,6 +186,7 @@ namespace Prova.Dados
             sqlCMD.Parameters.AddWithValue("@Nome", itemPedido.Nome);
             sqlCMD.Parameters.AddWithValue("@Quantidade", itemPedido.Quantidade);
             sqlCMD.Parameters.AddWithValue("@IdPedido", itemPedido.IdPedido);
+            sqlCMD.Parameters.AddWithValue("@IdTipoItem", itemPedido.IdTipoItem);
             sqlCMD.ExecuteNonQuery();
             FechaConexao();
         }
