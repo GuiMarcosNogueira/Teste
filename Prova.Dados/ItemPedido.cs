@@ -9,8 +9,10 @@ namespace Prova.Dados
     {
         public Guid Id { get; set; }
         public Guid IdPedido { get; set; }
+        public Guid IdTipoItem { get; set; }
         public string Nome { get; set; }
         public int Quantidade { get; set; }
         public Pedido Pedido { get; set; }
+        public List<TipoItem> TipoItem { get; set; }
     }
 }

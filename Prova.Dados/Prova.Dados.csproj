@@ -73,6 +73,7 @@
     <Compile Include="Pedido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio.cs" />
+    <Compile Include="TipoItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

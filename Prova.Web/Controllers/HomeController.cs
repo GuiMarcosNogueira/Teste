@@ -40,6 +40,7 @@ namespace Prova.Web.Controllers
 
             ivm.Pedido = repositorio.RetornaPedido(id);
             ivm.Items = repositorio.RetornaItems(id);
+            ivm.TiposItem = repositorio.RetornaTipoItem();
 
 
             return View(ivm);
@@ -48,7 +49,9 @@ namespace Prova.Web.Controllers
         public ActionResult NovoItem(string id)
         {
             ItemPedido itemPedido = new ItemPedido();
+            List<TipoItem> tiposItem = new List<TipoItem>();
             itemPedido.IdPedido = repositorio.RetornaPedido(id).Id;
+            itemPedido.TipoItem = repositorio.RetornaTipoItem();
             return View(itemPedido);
         }
 
@@ -58,6 +61,7 @@ namespace Prova.Web.Controllers
             // Adicionar pedido preenchendo o restante das informações que não estão em tela
             itemPedido.Id = Guid.NewGuid();
             itemPedido.IdPedido = new Guid(id);
+            itemPedido.IdTipoItem = itemPedido.IdTipoItem;
 
             repositorio.AdicionaItemPedido(itemPedido);
 

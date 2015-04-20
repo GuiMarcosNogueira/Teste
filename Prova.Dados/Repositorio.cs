@@ -84,6 +84,24 @@ namespace Prova.Dados
             return pedidos;
         }
 
+        public List<TipoItem> RetornaTipoItem()
+        {
+            List<TipoItem> tiposItem = new List<TipoItem>();
+            DataTable table = GetSQL("Get_TipoItem");
+
+            if (table.Rows.Count > 0)
+            {
+                foreach (DataRow row in table.Rows)
+                {
+                    TipoItem tipoItem = new TipoItem();
+                    tipoItem.Id = (Guid)row["Id"];
+                    tipoItem.Descricao = row["Descricao"].ToString();
+                    tiposItem.Add(tipoItem);
+                }
+            }
+            return tiposItem;
+        }
+
         public Pedido RetornaPedido(string id)
         {
             // Não aplicar o filtro no banco de dados, usar LINQ
@@ -112,6 +130,8 @@ namespace Prova.Dados
                     itemPedido.Nome = row["Nome"].ToString();
                     itemPedido.Quantidade = Convert.ToInt32(row["Quantidade"]);
                     itemPedido.IdPedido = (Guid)row["IdPedido"];
+                    itemPedido.IdTipoItem = (Guid)row["IdTipoItem"];
+                    itemPedido.TipoItem = RetornaTipoItem();
                     itensPedido.Add(itemPedido);
                 }
             }
@@ -144,6 +164,7 @@ namespace Prova.Dados
             sqlCMD.Parameters.AddWithValue("@Nome", itemPedido.Nome);
             sqlCMD.Parameters.AddWithValue("@Quantidade", itemPedido.Quantidade);
             sqlCMD.Parameters.AddWithValue("@IdPedido", itemPedido.IdPedido);
+            sqlCMD.Parameters.AddWithValue("@IdTipoItem", itemPedido.IdTipoItem);
             sqlCMD.ExecuteNonQuery();
             FechaConexao();
         }
