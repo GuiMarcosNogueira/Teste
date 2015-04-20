@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Prova.Dados.Pedido>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home Page";
+}
+
+<h2>Pedidos</h2>
+
+@Html.ActionLink("Novo Pedido", "NovoPedido")
+
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Data</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pedido in Model) { 
+            <tr>
+                <td>@Html.DisplayFor(pedidoModel => pedido.Id)</td>
+                <td>@Html.DisplayFor(pedidoModel => pedido.Data)</td>
+                <td>@Html.ActionLink("Adicionar Items", "Itens", new { id = pedido.Id })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

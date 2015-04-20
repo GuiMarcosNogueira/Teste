@@ -1,0 +1,46 @@
+﻿@model Prova.Dados.ItemPedido
+
+@{
+    ViewBag.Title = "EditarItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.IdPedido = Model.IdPedido;
+}
+@section head {
+    @*
+        Fazer javascript para validar se usuário preencheu todas as informações. Mostrar um alerta dos erros e cancelar o POST
+    *@
+}
+
+<h2>Editar Item para do Pedido @ViewBag.IdPedido</h2>
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Item</legend>
+
+        <div class="editor-label">
+            Nome
+        </div>
+        <div class="editor-field">
+            <input type="text" name="Nome" id="nome" value="@Html.DisplayFor(modelItem => Model.Nome)" />
+        </div>
+
+        <div class="editor-label">
+            Quantidade
+        </div>
+        <div class="editor-field">
+            <input type="text" name="Quantidade" id="quantidade" value="@Html.DisplayFor(modelItem => Model.Quantidade)" />
+        </div>
+
+        <p>
+            <input type="submit" value="Editar" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Itens", "Itens", new { id = @ViewBag.IdPedido })
+</div>

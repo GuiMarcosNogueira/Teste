@@ -1,0 +1,33 @@
+﻿@model Prova.Web.Models.ItensViewModel
+
+@{
+    ViewBag.Title = "Itens";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Itens do pedido "itemPedido"</h2>
+
+@Html.ActionLink("Novo Item", "NovoItem", new { id = Model.Pedido.Id })
+
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Quantidade</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var itens in Model.Items)
+        {
+            <tr>
+                <td>@Html.DisplayFor(itemModel => itens.Nome)</td>
+                <td>@Html.DisplayFor(itemModel => itens.Quantidade)</td>
+                <td>@Html.ActionLink("Editar Item", "EditarItem", new { id = itens.Id, idPedido = itens.IdPedido }) | @Html.ActionLink("Excluir Item", "Excluir", new { id = itens.Id, idPedido = itens.IdPedido })</td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Retornar aos Pedidos", "Index")
