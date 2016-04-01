@@ -11,17 +11,19 @@
 <table>
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Data</th>
-            <th></th>
+            <th>Número</th>
+            <th>Cliente</th>
+            <th>Valor Total</th>
+            <th>Ação</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var pedido in Model) { 
+        @foreach (var pedido in Model) {    
             <tr>
-                <td>@Html.DisplayFor(pedidoModel => pedido.Id)</td>
-                <td>@Html.DisplayFor(pedidoModel => pedido.Data)</td>
-                <td>@Html.ActionLink("Adicionar Items", "Itens", new { id = pedido.Id })</td>
+                <td>@Html.DisplayFor(pedidoModel => pedido.IdPedido)</td>
+                <td>@Html.DisplayFor(pedidoModel => pedido.NomeCliente)</td>
+                <td>@Html.DisplayFor(pedidoModel => pedido.ValorTotalPedido)</td>
+                <td>@Html.ActionLink("Adicionar Items", "Itens", new { id = pedido.IdPedido })</td>
             </tr>
         }
     </tbody>

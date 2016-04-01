@@ -7,22 +7,26 @@
 
 <h2>Itens do pedido "itemPedido"</h2>
 
-@Html.ActionLink("Novo Item", "NovoItem", new { id = Model.Pedido.Id })
+@Html.ActionLink("Novo Item", "NovoItem", new { id = Model.Pedido.IdPedido })
 
 <table>
     <thead>
         <tr>
             <th>Nome</th>
             <th>Quantidade</th>
-            <th></th>
+            <th>Valor</th>
+            <th>Valor Total</th>
+            <th>Ação</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var itens in Model.Items)
         {
             <tr>
-                <td>@Html.DisplayFor(itemModel => itens.Nome)</td>
-                <td>@Html.DisplayFor(itemModel => itens.Quantidade)</td>
+                <td>@Html.DisplayFor(itemModel => itens.DescricaoProduto)</td>
+                <td>@Html.DisplayFor(itemModel => itens.QuantidadeItensPedido)</td>
+                <td>@Html.DisplayFor(itemModel => itens.Valor)</td>
+                <td>@Html.DisplayFor(itemModel => itens.ValorTotalItemPedido)</td>
                 <td>@Html.ActionLink("Editar Item", "EditarItem", new { id = itens.Id, idPedido = itens.IdPedido }) | @Html.ActionLink("Excluir Item", "Excluir", new { id = itens.Id, idPedido = itens.IdPedido })</td>
             </tr>
             
@@ -30,4 +34,8 @@
     </tbody>
 </table>
 
-@Html.ActionLink("Retornar aos Pedidos", "Index")
+<div class="editor-field">
+    <label>Valor Total Pedido: @Html.DisplayFor(modelItem => Model.Pedido.ValorTotalPedido)</label>
+</div>
+
+    @Html.ActionLink("Retornar aos Pedidos", "Index")

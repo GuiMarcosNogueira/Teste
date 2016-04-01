@@ -10,6 +10,6 @@ namespace Prova.Web.Models
     {
         public Pedido Pedido { get; set; }
         public List<ItemPedido> Items { get; set; }
-        public List<TipoItem> TiposItem { get; set; }
+
     }
 }

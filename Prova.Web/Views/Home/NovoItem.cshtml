@@ -6,9 +6,6 @@
     ViewBag.IdPedido = Model.IdPedido;
 }
 @section head {
-    @*
-        Fazer javascript para validar se usuário preencheu todas as informações. Mostrar um alerta dos erros e cancelar o POST
-    *@
 }
 
 <h2>Novo Item para o Pedido @ViewBag.IdPedido</h2>
@@ -19,11 +16,11 @@
 
 @{
     List<SelectListItem> listItens = new List<SelectListItem>();
-    foreach(var modelItem in Model.TipoItem){
+    foreach(var modelItem in Model.Produtos){
     listItens.Add(new SelectListItem
     {
-        Text = modelItem.Descricao,
-        Value = modelItem.Id.ToString()
+        Text = modelItem.DescricaoProduto + " - $" +modelItem.ValorProduto,
+        Value = modelItem.IdProduto.ToString()
     });
   }
 }
@@ -34,16 +31,10 @@
         <legend>Item</legend>
 
         <div class="editor-label">
-            Nome
-        </div>
-        <div class="editor-field">
-            <input type="text" name="Nome" id="nome" />
-        </div>
-        <div class="editor-label">
             Tipo
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(modelItem => Model.IdTipoItem, listItens, "--Selecione o Tipo--")
+            @Html.DropDownListFor(modelItem => Model.IdProduto, listItens, "--Selecione o Tipo--")
         </div>
 
         <div class="editor-label">

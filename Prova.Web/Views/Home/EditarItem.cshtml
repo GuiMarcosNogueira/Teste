@@ -19,12 +19,11 @@
 
 @{
     List<SelectListItem> listItens = new List<SelectListItem>();
-    foreach (var modelItem in Model.TipoItem)
-    {
+    foreach (var modelItem in Model.Produtos){
         listItens.Add(new SelectListItem
         {
-            Text = modelItem.Descricao,
-            Value = modelItem.Id.ToString()
+            Text = modelItem.DescricaoProduto + " - " + modelItem.ValorProduto,
+            Value = modelItem.IdProduto.ToString()
         });
     }
 }
@@ -33,26 +32,18 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>Item</legend>
-
         <div class="editor-label">
-            Nome
+            Produto
         </div>
         <div class="editor-field">
-            <input type="text" name="Nome" id="nome" value="@Html.DisplayFor(modelItem => Model.Nome)" />
-        </div>
-
-        <div class="editor-label">
-            Tipo
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(modelItem => Model.IdTipoItem, listItens, "--Selecione o Tipo--")
+            @Html.DropDownListFor(modelItem => Model.IdProduto, listItens, "--Selecione o Tipo--")
         </div>
 
         <div class="editor-label">
             Quantidade
         </div>
         <div class="editor-field">
-            <input type="text" name="Quantidade" id="quantidade" value="@Html.DisplayFor(modelItem => Model.Quantidade)" />
+            <input type="text" name="Quantidade" id="quantidade" value="@Html.DisplayFor(modelItem => Model.QuantidadeItensPedido)" />
         </div>
 
         <p>

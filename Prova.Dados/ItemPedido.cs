@@ -7,12 +7,13 @@ namespace Prova.Dados
 {
     public class ItemPedido
     {
-        public Guid Id { get; set; }
-        public Guid IdPedido { get; set; }
-        public Guid IdTipoItem { get; set; }
-        public string Nome { get; set; }
-        public int Quantidade { get; set; }
-        public Pedido Pedido { get; set; }
-        public List<TipoItem> TipoItem { get; set; }
+        public int Id { get; set; }
+        public int IdPedido { get; set; }
+        public IEnumerable<Produto> Produtos { get; set; }
+        public decimal Valor { get; set; }
+        public decimal ValorTotalItemPedido { get; set; }
+        public string DescricaoProduto { get; set; }
+        public int IdProduto { get; set; }
+        public int QuantidadeItensPedido { get; set; }
     }
 }

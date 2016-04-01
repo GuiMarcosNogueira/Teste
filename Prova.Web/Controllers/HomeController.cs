@@ -22,73 +22,92 @@ namespace Prova.Web.Controllers
 
         public ActionResult NovoPedido()
         {
-            return View();
+            Pedido pedido = new Pedido();
+            ItemPedido itemPedido = new ItemPedido();
+            pedido.Clientes = repositorio.RetornaClientes();
+            return View(pedido);
         }
 
         [HttpPost]
         public ActionResult NovoPedido(Pedido pedido)
         {
             // Adiciona o novo pedido preenchido automaticamente com o método do repositório
-            pedido.Id = Guid.NewGuid();
             repositorio.AdicionaPedido(pedido);
             return RedirectToAction("Index");
         }
 
-        public ActionResult Itens(string id)
+        public ActionResult Itens(int id)
         {
             ItensViewModel ivm = new ItensViewModel();
 
             ivm.Pedido = repositorio.RetornaPedido(id);
             ivm.Items = repositorio.RetornaItems(id);
-            ivm.TiposItem = repositorio.RetornaTipoItem();
-
-
             return View(ivm);
         }
 
-        public ActionResult NovoItem(string id)
+        public ActionResult NovoItem(int id)
         {
             ItemPedido itemPedido = new ItemPedido();
-            List<TipoItem> tiposItem = new List<TipoItem>();
-            itemPedido.IdPedido = repositorio.RetornaPedido(id).Id;
-            itemPedido.TipoItem = repositorio.RetornaTipoItem();
+            
+            itemPedido.IdPedido = repositorio.RetornaPedido(id).IdPedido;
+            itemPedido.Produtos = repositorio.RetornaProdutos();
             return View(itemPedido);
         }
 
         [HttpPost]
-        public ActionResult NovoItem(string id, ItemPedido itemPedido)
+        public ActionResult NovoItem(int id, ItemPedido itemPedido, int quantidade)
         {
+            decimal ValorTotalPedido;
             // Adicionar pedido preenchendo o restante das informações que não estão em tela
-            itemPedido.Id = Guid.NewGuid();
-            itemPedido.IdPedido = new Guid(id);
-            itemPedido.IdTipoItem = itemPedido.IdTipoItem;
+            itemPedido.IdPedido = id;
+            Produto prod = new Produto();
+            prod = repositorio.RetornaProduto(itemPedido.IdProduto);
+            itemPedido.QuantidadeItensPedido = quantidade;
+            itemPedido.ValorTotalItemPedido = prod.ValorProduto * itemPedido.QuantidadeItensPedido;
+            itemPedido.Valor = prod.ValorProduto;
 
             repositorio.AdicionaItemPedido(itemPedido);
+            ValorTotalPedido = repositorio.GetTotalValueByPedido(itemPedido.IdPedido);
+
+            repositorio.UpdatePedidoValue(itemPedido.IdPedido, ValorTotalPedido);
 
             return RedirectToAction("Itens", new { id = id });
         }
                 
-        public ActionResult Excluir(string id, string idPedido)
+        public ActionResult Excluir(string id, int idPedido)
         {
             // Adicionar pedido preenchendo o restante das informações que não estão em tela
 
+            decimal totalValue;
+
             repositorio.RemoveItemPedido(id);
+            totalValue = repositorio.GetTotalValueByPedido(idPedido);
+            repositorio.UpdatePedidoValue(idPedido, totalValue);
+
 
             return RedirectToAction("Itens", new { id = idPedido });
         }
 
-        public ActionResult EditarItem(string id, string IdPedido)
+        public ActionResult EditarItem(int id, int IdPedido)
         {
             ItemPedido itemPedido = new ItemPedido();
             itemPedido = repositorio.RetornaItem(id, IdPedido);
+            itemPedido.Produtos = repositorio.RetornaProdutos();
             return View(itemPedido);
         }
 
         [HttpPost]
-        public ActionResult EditarItem(string id, string idPedido, ItemPedido itemPedido)
+        public ActionResult EditarItem(string id, int idPedido, ItemPedido itemPedido, int quantidade)
         {
-            // Adicionar pedido preenchendo o restante das informações que não estão em tela
+            decimal totalValue;
+            itemPedido.QuantidadeItensPedido = quantidade;
+            Produto prod = new Produto();
+            prod = repositorio.RetornaProduto(itemPedido.IdProduto);
+            itemPedido.ValorTotalItemPedido = prod.ValorProduto * itemPedido.QuantidadeItensPedido;
+            itemPedido.Valor = prod.ValorProduto;
             repositorio.EditarItemPedido(itemPedido);
+            totalValue = repositorio.GetTotalValueByPedido(itemPedido.IdPedido);
+            repositorio.UpdatePedidoValue(itemPedido.IdPedido, totalValue);
 
             return RedirectToAction("Itens", new { id = idPedido });
         }
